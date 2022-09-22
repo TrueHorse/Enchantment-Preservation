@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "enchantmentstones",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Enchantment Stones",
+  "description": "This is a Minecraft mod that adds stones you enchant and then put on your tools, instead of enchanting the tools themselves.",
   "authors": [
-    "Me!"
+    "TrueHorse"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/TrueHorse/Enchantment-Stones",
+    "issues": "https://github.com/TrueHorse/Enchantment-Stones/issues"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/enchantmentstones/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.trueHorse.enchantmentStones.EnchantmentStones"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "enchantmentstones.mixins.json"
   ],
 
   "depends": {
