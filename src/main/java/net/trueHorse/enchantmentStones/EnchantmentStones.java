@@ -22,5 +22,6 @@ public class EnchantmentStones implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","enchantment_stone"),ENCHANTMENT_STONE);
+		EnchantmentStonesRecipeSerializer.registerSpecialRecipe();
 	}
 }
