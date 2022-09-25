@@ -21,7 +21,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
         for(int i=0;i<inventory.size();i++){
             ItemStack stack = inventory.getStack(i);
             if(!stack.isEmpty()){
-                if(stack.isOf(EnchantmentStones.ENCHANTMENT_STONE)&&!hasEnchantmentStone){
+                if(stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&!hasEnchantmentStone){
                     hasEnchantmentStone=true;
                     continue;
                 }
@@ -50,13 +50,13 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
         }
         for(int i=0;i<inventory.size();i++){
             ItemStack stack = inventory.getStack(i);
-            if(!stack.isEmpty()&&stack.isOf(EnchantmentStones.ENCHANTMENT_STONE)){
+            if(!stack.isEmpty()&&stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
                 stoneStack = stack.copy();
                 break;
             }
         }
 
-        ((ItemAccess)equipmentStack.getItem()).getAddedEnchantmentStones().add((EnchantmentStoneItem)stoneStack.getItem());
+        ((ItemAccess)equipmentStack.getItem()).getAddedEnchantmentStones().add(stoneStack.getItem());
         return equipmentStack;
     }
 

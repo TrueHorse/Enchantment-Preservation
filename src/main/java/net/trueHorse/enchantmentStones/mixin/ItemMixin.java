@@ -2,7 +2,6 @@ package net.trueHorse.enchantmentStones.mixin;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.trueHorse.enchantmentStones.EnchantmentStoneItem;
 import net.trueHorse.enchantmentStones.ItemAccess;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 @Mixin(Item.class)
 public abstract class ItemMixin implements ItemAccess {
 
-    private final ArrayList<EnchantmentStoneItem> addedEnchantmentStones = ItemMixin.getNewArrayList();
+    private final ArrayList<Item> addedEnchantmentStones = ItemMixin.getNewArrayList();
 
     @Shadow @Final
     public abstract int getMaxCount();
@@ -36,7 +35,7 @@ public abstract class ItemMixin implements ItemAccess {
     }
 
     @Override
-    public ArrayList<EnchantmentStoneItem> getAddedEnchantmentStones(){
+    public ArrayList<Item> getAddedEnchantmentStones(){
         return  addedEnchantmentStones;
     }
 

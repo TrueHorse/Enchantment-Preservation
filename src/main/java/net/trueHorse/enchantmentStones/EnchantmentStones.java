@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
@@ -17,11 +18,42 @@ public class EnchantmentStones implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("enchantmentstones");
 
 	public static final ItemGroup ENCHANTMENT_STONES_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentstones","main_group")).icon(()->new ItemStack(Items.LAPIS_LAZULI)).build();
-	public static final Item ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item WHITE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item BLACK_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item GRAY_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item LIGHT_GRAY_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item YELLOW_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item ORANGE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item RED_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item PURPLE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item MAGENTA_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item PINK_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item BLUE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item LIGHT_BLUE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item LIME_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item GREEN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item CYAN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final Item BROWN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final TagKey<Item> ENCHANTMENT_STONES = TagKey.of(Registry.ITEM_KEY,new Identifier("enchantmentstones","enchantment_stones"));
 
 	@Override
 	public void onInitialize() {
-		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","enchantment_stone"),ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","white_enchantment_stone"),WHITE_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","orange_enchantment_stone"),ORANGE_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","light_blue_enchantment_stone"),LIGHT_BLUE_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","blue_enchantment_stone"),BLUE_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","yellow_enchantment_stone"),YELLOW_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","red_enchantment_stone"),RED_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","purple_enchantment_stone"),PURPLE_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","pink_enchantment_stone"),PINK_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","magenta_enchantment_stone"),MAGENTA_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","cyan_enchantment_stone"),CYAN_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","green_enchantment_stone"),GREEN_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","lime_enchantment_stone"),LIME_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","black_enchantment_stone"),BLACK_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","gray_enchantment_stone"),GRAY_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","light_gray_enchantment_stone"),LIGHT_GRAY_ENCHANTMENT_STONE);
+		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","brown_enchantment_stone"),BROWN_ENCHANTMENT_STONE);
 		EnchantmentStonesRecipeSerializer.registerSpecialRecipe();
 	}
 }
