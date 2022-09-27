@@ -12,8 +12,6 @@ import java.util.ArrayList;
 @Mixin(Item.class)
 public abstract class ItemMixin implements ItemAccess {
 
-    private final ArrayList<Item> addedEnchantmentStones = ItemMixin.getNewArrayList();
-
     @Shadow @Final
     public abstract int getMaxCount();
 
@@ -32,14 +30,5 @@ public abstract class ItemMixin implements ItemAccess {
     @Override
     public boolean isEquipment(ItemStack itemStack){
         return this.getMaxCount() == 1 && this.isDamageable();
-    }
-
-    @Override
-    public ArrayList<Item> getAddedEnchantmentStones(){
-        return  addedEnchantmentStones;
-    }
-
-    private static <T> ArrayList<T> getNewArrayList(){
-        return new ArrayList<T>();
     }
 }

@@ -8,6 +8,4 @@ import java.util.ArrayList;
 public interface ItemAccess {
 
     boolean isEquipment(ItemStack itemStack);
-
-    ArrayList<Item> getAddedEnchantmentStones();
 }

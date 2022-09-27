@@ -56,7 +56,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
             }
         }
 
-        ((ItemAccess)equipmentStack.getItem()).getAddedEnchantmentStones().add(stoneStack.getItem());
+        ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stoneStack);
         return equipmentStack;
     }
 
