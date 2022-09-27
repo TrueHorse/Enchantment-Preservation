@@ -1,19 +1,14 @@
 package net.trueHorse.enchantmentStones.mixin;
 
-import net.fabricmc.fabric.impl.client.indigo.renderer.helper.ColorHelper;
-import net.fabricmc.fabric.impl.client.rendering.ColorProviderRegistryImpl;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.ClickType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.trueHorse.enchantmentStones.EnchantmentStones;
 import net.trueHorse.enchantmentStones.ItemStackAccess;
 import net.trueHorse.enchantmentStones.Utils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,9 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -41,19 +34,20 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     }
      */
 
-    /*
     @Inject(method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V",shift = At.Shift.BEFORE))
-    private <T> void pickUpEnchantmentStonesOnBreak(int amount, LivingEntity entity, Consumer<T> breakCallback, CallbackInfo info){
+    private <T> void pickUpEnchantmentStonesOnBreak(int amount, LivingEntity entity, Consumer<T> breakCallback, CallbackInfo info) {
+
         if (entity instanceof PlayerEntity) {
-            EnchantmentStones.LOGGER.error("player");
-            for (ItemStack stone:addedEnchantmentStones) {
-                boolean test =((PlayerEntity)entity).giveItemStack(stone);
-                EnchantmentStones.LOGGER.error(String.valueOf(test));
+            NbtList stoneList = this.nbt.getList("Enchantment Stones",10);
+
+            for (NbtElement stoneNbt : stoneList) {
+                ItemStack stone = Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stoneNbt).getString("StoneId"))).getDefaultStack();
+                EnchantmentHelper.set(EnchantmentHelper.fromNbt(((NbtCompound)stoneNbt).getList("Enchantments",10)),stone);
+
+                ((PlayerEntity) entity).giveItemStack(stone);
             }
-            addedEnchantmentStones.clear();
         }
     }
-     */
 
     @Override
     public void addEnchantmentStone(ItemStack stoneStack){
