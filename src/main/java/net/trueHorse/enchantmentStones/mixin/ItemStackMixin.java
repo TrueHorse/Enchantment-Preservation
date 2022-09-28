@@ -1,6 +1,5 @@
 package net.trueHorse.enchantmentStones.mixin;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -42,7 +41,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
             for (NbtElement stoneNbt : stoneList) {
                 ItemStack stone = Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stoneNbt).getString("StoneId"))).getDefaultStack();
-                EnchantmentHelper.set(EnchantmentHelper.fromNbt(((NbtCompound)stoneNbt).getList("Enchantments",10)),stone);
+                stone.getOrCreateNbt().put("StoredEnchantments",((NbtCompound)stoneNbt).getList("Enchantments",10));
 
                 ((PlayerEntity) entity).giveItemStack(stone);
             }

@@ -18,22 +18,22 @@ public class EnchantmentStones implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("enchantmentstones");
 
 	public static final ItemGroup ENCHANTMENT_STONES_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentstones","main_group")).icon(()->new ItemStack(Items.LAPIS_LAZULI)).build();
-	public static final Item WHITE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item BLACK_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item GRAY_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item LIGHT_GRAY_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item YELLOW_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item ORANGE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item RED_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item PURPLE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item MAGENTA_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item PINK_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item BLUE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item LIGHT_BLUE_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item LIME_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item GREEN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item CYAN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
-	public static final Item BROWN_ENCHANTMENT_STONE = new Item(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem WHITE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem BLACK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem LIGHT_GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem YELLOW_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem ORANGE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem RED_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem PURPLE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem MAGENTA_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem PINK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem LIGHT_BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem LIME_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem GREEN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem CYAN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
+	public static final EnchantmentStoneItem BROWN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
 	public static final TagKey<Item> ENCHANTMENT_STONES = TagKey.of(Registry.ITEM_KEY,new Identifier("enchantmentstones","enchantment_stones"));
 
 	@Override
