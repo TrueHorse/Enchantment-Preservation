@@ -64,7 +64,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
         }
 
         for(ItemStack stack:stoneStacks){
-            Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getEnchantments());
+            Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getOrCreateNbt().getList("StoredEnchantments",10));
             stoneEnchantments.forEach(equipmentStack::addEnchantment);
             ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stack);
         }

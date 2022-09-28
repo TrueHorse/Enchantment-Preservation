@@ -4,6 +4,7 @@
   "package": "net.trueHorse.enchantmentStones.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EnchantmentScreenHandlerMixin",
     "ItemMixin",
     "ItemStackMixin"
   ],
