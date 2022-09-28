@@ -1,5 +1,7 @@
 package net.trueHorse.enchantmentStones;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
@@ -8,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
 
@@ -61,9 +64,10 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
         }
 
         for(ItemStack stack:stoneStacks){
+            Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getEnchantments());
+            stoneEnchantments.forEach(equipmentStack::addEnchantment);
             ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stack);
         }
-
 
         return equipmentStack;
     }
