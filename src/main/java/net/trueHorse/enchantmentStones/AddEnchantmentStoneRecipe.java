@@ -7,7 +7,11 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
+
+    private final int maxStones = 3;
 
     public AddEnchantmentStoneRecipe(Identifier id) {
         super(id);
@@ -16,47 +20,51 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
     @Override
     public boolean matches(CraftingInventory inventory, World world) {
         boolean hasEquipment = false;
-        boolean hasEnchantmentStone = false;
+        int stoneCount = 0;
 
         for(int i=0;i<inventory.size();i++){
             ItemStack stack = inventory.getStack(i);
             if(!stack.isEmpty()){
-                if(stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&!hasEnchantmentStone){
-                    hasEnchantmentStone=true;
+                if(stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&stoneCount<maxStones){
+                    stoneCount+=1;
                     continue;
                 }
                 if(((ItemAccess)stack.getItem()).isEquipment(stack)&&!hasEquipment){
                     hasEquipment = true;
-                    continue;
+                    stoneCount+=stack.getOrCreateNbt().getList("Enchantment Stones",10).size();
+                    if(stoneCount<=maxStones) continue;
+                    else return false;
                 }
                 return false;
             }
         }
 
-        return hasEnchantmentStone&&hasEquipment;
+        return stoneCount>0&&hasEquipment;
     }
 
     @Override
     public ItemStack craft(CraftingInventory inventory) {
         ItemStack equipmentStack = ItemStack.EMPTY;
-        ItemStack stoneStack = ItemStack.EMPTY;
+        ArrayList<ItemStack> stoneStacks = new ArrayList<>();
 
         for(int i=0;i<inventory.size();i++){
             ItemStack stack = inventory.getStack(i);
+
             if(!stack.isEmpty()&&((ItemAccess)stack.getItem()).isEquipment(stack)){
                 equipmentStack = stack.copy();
-                break;
+                continue;
             }
-        }
-        for(int i=0;i<inventory.size();i++){
-            ItemStack stack = inventory.getStack(i);
+
             if(!stack.isEmpty()&&stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
-                stoneStack = stack.copy();
-                break;
+                stoneStacks.add(stack.copy());
             }
         }
 
-        ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stoneStack);
+        for(ItemStack stack:stoneStacks){
+            ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stack);
+        }
+
+
         return equipmentStack;
     }
 
