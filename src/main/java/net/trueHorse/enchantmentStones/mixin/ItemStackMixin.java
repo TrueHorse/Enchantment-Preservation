@@ -11,9 +11,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.tag.TagKey;
-import net.minecraft.text.LiteralTextContent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -82,8 +80,12 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     list.add(MutableText.of(new LiteralTextContent("  None")).formatted(Formatting.GRAY));
                 }else {
                     for(NbtElement enchantmentNbt:storedEnchantmentNbt){
-                        Formatting formatting = this.getEnchantments().contains(enchantmentNbt) ? Formatting.GRAY : Formatting.DARK_GRAY;
-                        Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> list.add(MutableText.of(new LiteralTextContent("  ")).append(e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt))).formatted(formatting)));
+                        Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
+                            Text enchantmentText = e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt));
+                            enchantmentText = MutableText.of(enchantmentText.getContent()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
+                            EnchantmentStones.LOGGER.error(String.valueOf(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY)));
+                            list.add(MutableText.of(new LiteralTextContent("  ")).append(enchantmentText));
+                        });
                     }
                 }
             }
@@ -92,12 +94,13 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @ModifyArg(method = "getTooltip", at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"),index = 1)
     private NbtList removeAlreadyAppendedEnchantments(NbtList enchantments){
+        NbtList unstoredEnchants = enchantments.copy();
         NbtList toRemove = new NbtList();
         for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
             toRemove.addAll(((NbtCompound) stone).getList("StoredEnchantments", 10));
         }
-        enchantments.removeAll(toRemove);
-        return  enchantments;
+        unstoredEnchants.removeAll(toRemove);
+        return  unstoredEnchants;
     }
 
     @Inject(method = "getEnchantments",at=@At("HEAD"),cancellable = true)
