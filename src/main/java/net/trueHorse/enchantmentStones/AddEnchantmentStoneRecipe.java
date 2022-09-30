@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
@@ -65,6 +66,16 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
 
         for(ItemStack stack:stoneStacks){
             Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getOrCreateNbt().getList("StoredEnchantments",10));
+
+            List<Enchantment> incompatibleEnchants = new ArrayList<>();
+            ItemStack finalEquipmentStack = equipmentStack;
+            stoneEnchantments.forEach((e, i)->{
+                if(!e.isAcceptableItem(finalEquipmentStack))incompatibleEnchants.add(e);
+            });
+            for(Enchantment enchantment:incompatibleEnchants){
+                stoneEnchantments.remove(enchantment);
+            }
+
             stoneEnchantments.forEach(equipmentStack::addEnchantment);
             ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stack);
         }
