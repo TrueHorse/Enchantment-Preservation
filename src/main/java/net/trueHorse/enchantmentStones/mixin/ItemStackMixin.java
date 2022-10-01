@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -136,6 +137,14 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
             NbtList nbtList = this.nbt.getList("StoredEnchantments", 10);
             nbtList.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "setSubNbt",at=@At("HEAD"),cancellable = true)
+    private void setStoredEnchantments(String key, NbtElement element,CallbackInfo info){
+        if(Objects.equals(key, "Enchantments")&&this.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
+            this.getOrCreateNbt().put("StoredEnchantments", element);
             info.cancel();
         }
     }
