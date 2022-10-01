@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
@@ -66,13 +67,19 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
 
         for(ItemStack stack:stoneStacks){
             Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getOrCreateNbt().getList("StoredEnchantments",10));
+            List<Enchantment> notApplyEnchants = new ArrayList<>();
 
-            List<Enchantment> incompatibleEnchants = new ArrayList<>();
             ItemStack finalEquipmentStack = equipmentStack;
+            Map<Enchantment,Integer> equipEnchants = EnchantmentHelper.get(equipmentStack);
             stoneEnchantments.forEach((e, i)->{
-                if(!e.isAcceptableItem(finalEquipmentStack))incompatibleEnchants.add(e);
+                if(equipEnchants.containsKey(e)&&equipEnchants.get(e)<=i){
+                    NbtCompound weakEnchantNbt = EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(e),i);
+                    finalEquipmentStack.getEnchantments().remove(weakEnchantNbt);
+                    finalEquipmentStack.getOrCreateNbt().put("weaker enchantments",weakEnchantNbt);
+                }
+                if(!e.isAcceptableItem(finalEquipmentStack)||(equipEnchants.containsKey(e)&&equipEnchants.get(e)>i))notApplyEnchants.add(e);
             });
-            for(Enchantment enchantment:incompatibleEnchants){
+            for(Enchantment enchantment:notApplyEnchants){
                 stoneEnchantments.remove(enchantment);
             }
 

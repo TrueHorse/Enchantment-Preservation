@@ -29,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -88,6 +89,11 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     }
                 }
             }
+            Map<Enchantment,Integer> weakEnchants = EnchantmentHelper.fromNbt(this.nbt.getList("weak enchantments",10));
+            weakEnchants.forEach((e,i)->{
+                Text enchantmentName = e.getName(i);
+                list.add(MutableText.of(enchantmentName.getContent()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
+            });
         }
     }
 
