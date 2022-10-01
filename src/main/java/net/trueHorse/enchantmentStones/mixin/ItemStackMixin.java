@@ -146,9 +146,19 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Inject(method = "setSubNbt",at=@At("HEAD"),cancellable = true)
     private void setStoredEnchantments(String key, NbtElement element,CallbackInfo info){
-        if(Objects.equals(key, "Enchantments")&&this.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
-            this.getOrCreateNbt().put("StoredEnchantments", element);
-            info.cancel();
+        if(Objects.equals(key, "Enchantments")&&(this.isIn(EnchantmentStones.ENCHANTMENT_STONES)||!this.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty())){
+            if(this.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
+                this.getOrCreateNbt().put("StoredEnchantments", element);
+                info.cancel();
+            }else{
+                for(NbtElement stone:this.nbt.getList("Enchantment Stones",10)){
+                    if(((NbtCompound)stone).getList("StoredEnchantments",10).isEmpty()){
+                        ((NbtCompound)stone).put("StoredEnchantments",element);
+                        info.cancel();
+                        break;
+                    }
+                }
+            }
         }
     }
 
