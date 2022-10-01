@@ -41,13 +41,6 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     @Shadow
     public abstract NbtCompound getOrCreateNbt();
 
-    /*
-    @Inject(method = "onClicked",at=@At(value = "HEAD"))
-    private void testStones(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> info){
-        EnchantmentStones.LOGGER.error(String.valueOf(stack.getOrCreateNbt().contains("Enchantment Stones")));
-    }
-     */
-
     @Shadow public abstract Item getItem();
 
     @Shadow public abstract boolean isIn(TagKey<Item> tag);
@@ -128,7 +121,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     }
 
     @Inject(method = "addEnchantment",at=@At("HEAD"),cancellable = true)
-    private void addStoredEnchantment(Enchantment enchantment, int lvl, CallbackInfo info){
+    private void addToStoredEnchantment(Enchantment enchantment, int lvl, CallbackInfo info){
         if(this.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
             this.getOrCreateNbt();
             if (!this.nbt.contains("StoredEnchantments", 9)) {
@@ -138,6 +131,16 @@ public abstract class ItemStackMixin implements ItemStackAccess {
             NbtList nbtList = this.nbt.getList("StoredEnchantments", 10);
             nbtList.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
             info.cancel();
+        }
+
+        if(this.getOrCreateNbt().contains("Enchantment Stones")&&!this.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
+            for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
+                NbtList storedEnchants = ((NbtCompound)stone).getList("StoredEnchantments",10);
+                if(storedEnchants.isEmpty()){
+                    storedEnchants.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
+                    break;
+                }
+            }
         }
     }
 
