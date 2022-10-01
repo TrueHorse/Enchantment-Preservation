@@ -83,10 +83,10 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     }
                 }
             }
-            Map<Enchantment,Integer> weakEnchants = EnchantmentHelper.fromNbt(this.nbt.getList("weak enchantments",10));
-            weakEnchants.forEach((e,i)->{
+            Map<Enchantment,Integer> weakerEnchants = EnchantmentHelper.fromNbt(this.nbt.getList("weaker enchantments",10));
+            weakerEnchants.forEach((e,i)->{
                 Text enchantmentName = e.getName(i);
-                list.add(MutableText.of(enchantmentName.getContent()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
+                list.add(Text.literal(enchantmentName.getString()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
             });
         }
     }
