@@ -77,7 +77,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     for(NbtElement enchantmentNbt:storedEnchantmentNbt){
                         Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
                             Text enchantmentText = e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt));
-                            enchantmentText = MutableText.of(enchantmentText.getContent()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
+                            enchantmentText = Text.literal(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
                             list.add(MutableText.of(new LiteralTextContent("  ")).append(enchantmentText));
                         });
                     }
