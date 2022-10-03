@@ -89,7 +89,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
                 stoneEnchantments.remove(enchantment);
             }
 
-            stoneEnchantments.forEach(equipmentStack::addEnchantment);
+            stoneEnchantments.forEach((e,i)->((ItemStackAccess)(Object)finalEquipmentStack).addEnchantmentFromStone(e,i));
             ((ItemStackAccess)(Object)equipmentStack).addEnchantmentStone(stack);
         }
 

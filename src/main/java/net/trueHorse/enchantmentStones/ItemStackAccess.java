@@ -1,8 +1,11 @@
 package net.trueHorse.enchantmentStones;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 
 public interface ItemStackAccess {
 
-    public void addEnchantmentStone(ItemStack stoneStack);
+    void addEnchantmentStone(ItemStack stoneStack);
+
+    void addEnchantmentFromStone(Enchantment enchantment, int level);
 }
