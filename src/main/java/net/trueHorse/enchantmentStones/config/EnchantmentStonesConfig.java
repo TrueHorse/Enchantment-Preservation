@@ -70,4 +70,15 @@ public class EnchantmentStonesConfig {
         });
         return configString.toString();
     }
+
+    public static String getVal(String key){
+        String val = configs.get(key).getVal();
+        if(val!=null){
+            return val;
+        }else{
+            EnchantmentStones.LOGGER.error("Could not get config option "+key);
+            EnchantmentStones.LOGGER.info(Arrays.toString(Thread.currentThread().getStackTrace()));
+            return null;
+        }
+    }
 }

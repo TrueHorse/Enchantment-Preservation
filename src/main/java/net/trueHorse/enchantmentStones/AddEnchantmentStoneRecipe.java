@@ -10,14 +10,13 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import net.trueHorse.enchantmentStones.config.EnchantmentStonesConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
-
-    private final int maxStones = 3;
 
     public AddEnchantmentStoneRecipe(Identifier id) {
         super(id);
@@ -31,14 +30,15 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
         for(int i=0;i<inventory.size();i++){
             ItemStack stack = inventory.getStack(i);
             if(!stack.isEmpty()){
-                if(stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&stoneCount<maxStones){
+                int maxStones = Integer.parseInt(EnchantmentStonesConfig.getVal("stonesPerEquip"));
+                if(stack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&stoneCount< maxStones){
                     stoneCount+=1;
                     continue;
                 }
                 if(((ItemAccess)stack.getItem()).isEquipment(stack)&&!hasEquipment){
                     hasEquipment = true;
                     stoneCount+=stack.getOrCreateNbt().getList("Enchantment Stones",10).size();
-                    if(stoneCount<=maxStones) continue;
+                    if(stoneCount<= maxStones) continue;
                     else return false;
                 }
                 return false;
