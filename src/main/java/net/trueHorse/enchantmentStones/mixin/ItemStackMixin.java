@@ -135,6 +135,9 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
         if(this.getOrCreateNbt().contains("Enchantment Stones")&&!this.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
             for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
+                if (!((NbtCompound)stone).contains("StoredEnchantments", 9)) {
+                    ((NbtCompound)stone).put("StoredEnchantments", new NbtList());
+                }
                 NbtList storedEnchants = ((NbtCompound)stone).getList("StoredEnchantments",10);
                 if(storedEnchants.isEmpty()){
                     storedEnchants.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
