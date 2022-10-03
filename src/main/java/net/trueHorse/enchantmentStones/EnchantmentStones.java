@@ -10,6 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.trueHorse.enchantmentStones.config.EnchantmentStonesConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,8 @@ public class EnchantmentStones implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		EnchantmentStonesConfig.loadConfigs();
+
 		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","white_enchantment_stone"),WHITE_ENCHANTMENT_STONE);
 		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","orange_enchantment_stone"),ORANGE_ENCHANTMENT_STONE);
 		Registry.register(Registry.ITEM,new Identifier("enchantmentstones","light_blue_enchantment_stone"),LIGHT_BLUE_ENCHANTMENT_STONE);
