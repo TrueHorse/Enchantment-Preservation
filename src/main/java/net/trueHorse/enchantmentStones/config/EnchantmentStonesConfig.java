@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class EnchantmentStonesConfig {
 
-    private static final Map<String,ConfigOption> configs = new HashMap<>();
+    private static final Map<String,ConfigOption<?>> configs = new HashMap<>();
     private final static String MOD_CONFIG_DIR_NAME = FabricLoader.getInstance().getConfigDir() + "/enchantment_stones";
     private final static File MOD_CONFIG_FILE = new File(MOD_CONFIG_DIR_NAME+"/enchantment_stones.properties");
 
@@ -62,7 +62,7 @@ public class EnchantmentStonesConfig {
         }
     }
 
-    private static String getConfigContentAsString(Map<String, ConfigOption> configs) {
+    private static String getConfigContentAsString(Map<String, ConfigOption<?>> configs) {
         StringBuilder configString = new StringBuilder();
         configs.forEach((k,v)->{
             configString.append("#").append(v.getDescription()).append("\n");
