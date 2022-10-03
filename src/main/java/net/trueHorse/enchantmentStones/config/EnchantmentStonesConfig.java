@@ -12,8 +12,8 @@ import java.util.Properties;
 public class EnchantmentStonesConfig {
 
     private static final Map<String,ConfigOption> configs = new HashMap<>();
-    private final static String MOD_CONFIG_DIR_NAME = FabricLoader.getInstance().getConfigDir() + "/wild_tool_access";
-    private final static File MOD_CONFIG_FILE = new File(MOD_CONFIG_DIR_NAME+"/wild_tool_access.properties");
+    private final static String MOD_CONFIG_DIR_NAME = FabricLoader.getInstance().getConfigDir() + "/enchantment_stones";
+    private final static File MOD_CONFIG_FILE = new File(MOD_CONFIG_DIR_NAME+"/enchantment_stones.properties");
 
     public static void loadConfigs(){
         configs.put("enchantableWithoutStone",new ConfigOption<Boolean>("true","true","Is equipment without a stone enchantable?"));
