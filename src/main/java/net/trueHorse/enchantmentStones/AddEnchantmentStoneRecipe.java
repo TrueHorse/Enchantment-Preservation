@@ -73,9 +73,17 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
             ItemStack finalEquipmentStack = equipmentStack;
             Map<Enchantment,Integer> equipEnchants = EnchantmentHelper.get(equipmentStack);
             stoneEnchantments.forEach((e, i)->{
+                equipEnchants.forEach((ee,ei)->{
+                    if(e != ee && !e.canCombine(ee)){
+                        notApplyEnchants.add(e);
+                    }
+                });
+
                 if(equipEnchants.containsKey(e)&&equipEnchants.get(e)<=i){
                     NbtCompound weakEnchantNbt = EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(e),equipEnchants.get(e));
+
                     finalEquipmentStack.getEnchantments().remove(weakEnchantNbt);
+
                     if (!finalEquipmentStack.getOrCreateNbt().contains("weaker enchantments", 9)) {
                         finalEquipmentStack.getOrCreateNbt().put("weaker enchantments", new NbtList());
                     }
@@ -83,6 +91,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
                     NbtList nbtList = finalEquipmentStack.getOrCreateNbt().getList("weaker enchantments", 10);
                     nbtList.add(weakEnchantNbt);
                 }
+
                 if(!e.isAcceptableItem(finalEquipmentStack)||(equipEnchants.containsKey(e)&&equipEnchants.get(e)>i))notApplyEnchants.add(e);
             });
             for(Enchantment enchantment:notApplyEnchants){
