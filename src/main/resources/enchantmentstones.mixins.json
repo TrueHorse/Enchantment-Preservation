@@ -6,6 +6,7 @@
   "mixins": [
     "AnvilScreenHandlerMixin",
     "EnchantmentScreenHandlerMixin",
+    "GrindstoneScreenHandlerMixin",
     "ItemMixin",
     "ItemStackMixin"
   ],
