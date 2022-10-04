@@ -3,6 +3,7 @@ package net.trueHorse.enchantmentStones.mixin;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.trueHorse.enchantmentStones.ItemAccess;
+import net.trueHorse.enchantmentStones.config.EnchantmentStonesConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,10 +19,10 @@ public abstract class ItemMixin implements ItemAccess {
 
     public boolean isEnchantable(ItemStack itemStack)
     {
-        if(false){
-            return false;
+        if(!Boolean.parseBoolean(EnchantmentStonesConfig.getVal("enchantableWithoutStone"))){
+            return !itemStack.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()&&itemStack.getOrCreateNbt().getList("Enchantment Stones",10).size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"));
         }else{
-            return this.getMaxCount() == 1 && this.isDamageable();
+            return this.isEquipment(itemStack);
         }
     }
 

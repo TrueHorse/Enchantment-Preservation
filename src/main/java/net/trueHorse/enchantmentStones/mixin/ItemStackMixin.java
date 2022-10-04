@@ -138,6 +138,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
         }
 
         if(this.getOrCreateNbt().contains("Enchantment Stones")){
+            int fullStones = 0;
             for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
                 if (!((NbtCompound)stone).contains("StoredEnchantments", 9)) {
                     ((NbtCompound)stone).put("StoredEnchantments", new NbtList());
@@ -146,7 +147,12 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                 if(storedEnchants.size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"))){
                     storedEnchants.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
                     break;
+                }else {
+                    fullStones++;
                 }
+            }
+            if(!Boolean.parseBoolean(EnchantmentStonesConfig.getVal("enchantableWithoutStone"))&&fullStones==this.getOrCreateNbt().getList("Enchantment Stones",10).size()){
+                info.cancel();
             }
         }
     }
@@ -193,6 +199,9 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                         ((NbtCompound)stone).getList("StoredEnchantments",10).add(toApply.get(applied));
                         applied++;
                     }
+                }
+                if(!Boolean.parseBoolean(EnchantmentStonesConfig.getVal("enchantableWithoutStone"))){
+                    ((NbtList)element).removeAll(toApply.subList(applied,toApply.size()));
                 }
             }
         }
