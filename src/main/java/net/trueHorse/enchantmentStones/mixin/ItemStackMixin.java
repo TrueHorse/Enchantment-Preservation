@@ -174,10 +174,23 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                 this.getOrCreateNbt().put("StoredEnchantments", element);
                 info.cancel();
             }else{
+                NbtList toApply = (NbtList) element.copy();
+                for(NbtElement stone:this.nbt.getList("Enchantment Stones",10)){
+                    NbtList toRemove = new NbtList();
+                    for(NbtElement enchantment:((NbtCompound)stone).getList("StoredEnchantments",10)){
+                        if(toApply.contains(enchantment)){
+                            toApply.remove(enchantment);
+                        }else{
+                            toRemove.add(enchantment);
+                        }
+                    }
+                    ((NbtCompound)stone).getList("StoredEnchantments",10).removeAll(toRemove);
+                }
+
                 int applied = 0;
                 for(NbtElement stone:this.nbt.getList("Enchantment Stones",10)){
-                    while (((NbtCompound)stone).getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"))&&applied<((NbtList)element).size()){
-                        ((NbtCompound)stone).getList("StoredEnchantments",10).add(((NbtList)element).get(applied));
+                    while (((NbtCompound)stone).getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"))&&applied<toApply.size()){
+                        ((NbtCompound)stone).getList("StoredEnchantments",10).add(toApply.get(applied));
                         applied++;
                     }
                 }
