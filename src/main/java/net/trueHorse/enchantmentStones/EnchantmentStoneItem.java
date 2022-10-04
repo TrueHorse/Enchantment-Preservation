@@ -2,6 +2,7 @@ package net.trueHorse.enchantmentStones;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.trueHorse.enchantmentStones.config.EnchantmentStonesConfig;
 
 public class EnchantmentStoneItem extends Item {
 
@@ -11,7 +12,7 @@ public class EnchantmentStoneItem extends Item {
 
     @Override
     public boolean isEnchantable(ItemStack itemStack){
-        return true;
+        return itemStack.getEnchantments().size() < Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"));
     }
 
     @Override
