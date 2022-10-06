@@ -32,7 +32,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
     @Redirect(method = "updateResult", at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;isDamageable()Z",ordinal = 1))
     private boolean isAnvilable(ItemStack itemStack){
-        EnchantmentStones.LOGGER.error("call");
         if(itemStack.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
             return itemStack.getOrCreateNbt().getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"));
         }else{
