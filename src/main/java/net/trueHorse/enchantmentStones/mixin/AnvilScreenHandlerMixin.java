@@ -3,6 +3,7 @@ package net.trueHorse.enchantmentStones.mixin;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.*;
 import net.trueHorse.enchantmentStones.EnchantmentStones;
 import net.trueHorse.enchantmentStones.config.EnchantmentStonesConfig;
@@ -51,6 +52,22 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             this.output.setStack(0, ItemStack.EMPTY);
             this.levelCost.set(0);
             info.cancel();
+        }
+    }
+
+    @Inject(method = "updateResult",at=@At(value = "INVOKE",target = "Lnet/minecraft/enchantment/EnchantmentHelper;set(Ljava/util/Map;Lnet/minecraft/item/ItemStack;)V",shift = At.Shift.BEFORE),locals = LocalCapture.CAPTURE_FAILEXCEPTION,cancellable = true)
+    private void transferStones(CallbackInfo info, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3){
+        if(!itemStack3.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
+            NbtList stoneList1 = itemStack2.getOrCreateNbt().getList("Enchantment Stones",10).copy();
+            NbtList stoneList2 = itemStack3.getOrCreateNbt().getList("Enchantment Stones",10).copy();
+            if(stoneList1.size()+stoneList2.size()>Integer.parseInt(EnchantmentStonesConfig.getVal("stonesPerEquip"))){
+                this.output.setStack(0, ItemStack.EMPTY);
+                this.levelCost.set(0);
+                info.cancel();
+            }else{
+                stoneList1.addAll(stoneList2);
+                itemStack2.setSubNbt("Enchantment Stones",stoneList1);
+            }
         }
     }
 }
