@@ -31,6 +31,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
     @Redirect(method = "updateResult", at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;isDamageable()Z",ordinal = 1))
     private boolean isAnvilable(ItemStack itemStack){
+        EnchantmentStones.LOGGER.error("call");
         if(itemStack.isIn(EnchantmentStones.ENCHANTMENT_STONES)){
             return itemStack.getOrCreateNbt().getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentStonesConfig.getVal("enchantmentsPerStone"));
         }else{
@@ -39,7 +40,13 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
     }
 
     @Inject(method = "updateResult",at=@At(value = "INVOKE",target = "Lnet/minecraft/enchantment/EnchantmentHelper;get(Lnet/minecraft/item/ItemStack;)Ljava/util/Map;",ordinal = 1,shift = At.Shift.BEFORE),locals = LocalCapture.CAPTURE_FAILEXCEPTION,cancellable = true)
-    private void cancleIfNotEnchatableAndEBook(CallbackInfo info, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map<Enchantment,Integer> map, boolean bl){
+    private void cancleIfNotEnchatableOrMultiple(CallbackInfo info, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map<Enchantment,Integer> map, boolean bl){
+        if(itemStack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&itemStack.getCount()!=1){
+            this.output.setStack(0, ItemStack.EMPTY);
+            this.levelCost.set(0);
+            info.cancel();
+        }
+
         if(!Boolean.parseBoolean(EnchantmentStonesConfig.getVal("enchantableWithoutStone"))&&bl&&!itemStack.isIn(EnchantmentStones.ENCHANTMENT_STONES)&&itemStack.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
             this.output.setStack(0, ItemStack.EMPTY);
             this.levelCost.set(0);
