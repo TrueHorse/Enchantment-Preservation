@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -18,7 +17,7 @@ public class EnchantmentStones implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("enchantmentstones");
 
-	public static final ItemGroup ENCHANTMENT_STONES_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentstones","main_group")).icon(()->new ItemStack(Items.LAPIS_LAZULI)).build();
+	public static final ItemGroup ENCHANTMENT_STONES_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentstones","main_group")).icon(()->new ItemStack(EnchantmentStones.BLUE_ENCHANTMENT_STONE)).build();
 	public static final EnchantmentStoneItem WHITE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
 	public static final EnchantmentStoneItem BLACK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
 	public static final EnchantmentStoneItem GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ENCHANTMENT_STONES_GROUP));
