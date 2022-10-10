@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Enchantment Stones",
-  "description": "This is a Minecraft mod that adds stones you enchant and then put on your tools, instead of enchanting the tools themselves.",
+  "description": "Adds stones that can store your equipments enchantments.",
   "authors": [
     "TrueHorse"
   ],
