@@ -1,8 +1,9 @@
-package net.trueHorse.enchantmentPreservation;
+package net.trueHorse.enchantmentPreservation.items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 
 public class EnchantmentPreservationItems {
 

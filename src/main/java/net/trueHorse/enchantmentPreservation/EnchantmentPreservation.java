@@ -9,6 +9,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.trueHorse.enchantmentPreservation.config.EnchantmentPreservationConfig;
+import net.trueHorse.enchantmentPreservation.items.EnchantmentPreservationItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

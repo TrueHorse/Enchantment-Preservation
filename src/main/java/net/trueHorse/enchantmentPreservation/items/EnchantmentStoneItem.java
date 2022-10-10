@@ -1,4 +1,4 @@
-package net.trueHorse.enchantmentPreservation;
+package net.trueHorse.enchantmentPreservation.items;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
