@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " D ",
+    "ILI",
+    " I "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:white_dye"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "enchantmentpreservation:white_enchantment_stone",
+    "count": 1
+  }
+}

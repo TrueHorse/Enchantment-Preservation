@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "enchantmentpreservation:white_enchantment_stone",
+    "enchantmentpreservation:black_enchantment_stone",
+    "enchantmentpreservation:gray_enchantment_stone",
+    "enchantmentpreservation:light_gray_enchantment_stone",
+    "enchantmentpreservation:yellow_enchantment_stone",
+    "enchantmentpreservation:orange_enchantment_stone",
+    "enchantmentpreservation:red_enchantment_stone",
+    "enchantmentpreservation:purple_enchantment_stone",
+    "enchantmentpreservation:magenta_enchantment_stone",
+    "enchantmentpreservation:pink_enchantment_stone",
+    "enchantmentpreservation:blue_enchantment_stone",
+    "enchantmentpreservation:light_blue_enchantment_stone",
+    "enchantmentpreservation:cyan_enchantment_stone",
+    "enchantmentpreservation:lime_enchantment_stone",
+    "enchantmentpreservation:green_enchantment_stone",
+    "enchantmentpreservation:brown_enchantment_stone"
+  ]
+}

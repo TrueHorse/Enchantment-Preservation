@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "enchantmentstones",
+  "id": "enchantmentpreservation",
   "version": "${version}",
 
   "name": "Enchantment Stones",
@@ -14,16 +14,16 @@
   },
 
   "license": "MIT",
-  "icon": "assets/enchantmentstones/icon.png",
+  "icon": "assets/enchantmentpreservation/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.trueHorse.enchantmentStones.EnchantmentStones"
+      "net.trueHorse.enchantmentPreservation.EnchantmentPreservation"
     ]
   },
   "mixins": [
-    "enchantmentstones.mixins.json"
+    "enchantmentpreservation.mixins.json"
   ],
 
   "depends": {

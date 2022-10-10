@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "enchantmentstones:item/light_blue_enchantment_stone"
-  }
-}
