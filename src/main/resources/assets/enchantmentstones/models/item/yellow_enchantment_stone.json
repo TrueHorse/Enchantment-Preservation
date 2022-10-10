@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enchantmentstones:item/yellow_enchantment_stone"
+  }
+}
