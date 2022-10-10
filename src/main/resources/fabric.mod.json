@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Enchantment Stones",
-  "description": "Adds stones that can store your equipments enchantments.",
+  "description": "Adds stones that can store your equipment’s enchantments.",
   "authors": [
     "TrueHorse"
   ],
