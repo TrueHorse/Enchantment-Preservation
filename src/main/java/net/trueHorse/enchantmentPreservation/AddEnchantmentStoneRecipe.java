@@ -37,7 +37,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
                 }
                 if(((ItemAccess)stack.getItem()).isEquipment(stack)&&!hasEquipment){
                     hasEquipment = true;
-                    stoneCount+=stack.getOrCreateNbt().getList("Enchantment Stones",10).size();
+                    stoneCount+= ((ItemStackAccess)(Object)stack).getEnchantmentStones().size();
                     if(stoneCount<= maxStones) continue;
                     else return false;
                 }
@@ -112,6 +112,6 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<AddEnchantmentStoneRecipe> getSerializer() {
-        return EnchantmentStonesRecipeSerializer.ADD_ENCHANTMENT_STONE;
+        return EnchantmentPreservationRecipeSerializer.ADD_ENCHANTMENT_STONE;
     }
 }

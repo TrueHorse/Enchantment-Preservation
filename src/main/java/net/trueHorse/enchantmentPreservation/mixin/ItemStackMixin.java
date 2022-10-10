@@ -66,7 +66,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Inject(method = "getTooltip",at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V",shift = At.Shift.BEFORE),locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void appendEnchantmentStones(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> info, List<Text> list){
-        NbtList stonesAsNbt = this.getOrCreateNbt().getList("Enchantment Stones",10);
+        NbtList stonesAsNbt = this.getEnchantmentStones();
         if(!stonesAsNbt.isEmpty()){
             for(NbtElement stone:stonesAsNbt){
                 MutableText stoneName = (MutableText) Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stone).getString("StoneId"))).getName();
@@ -97,7 +97,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     private NbtList removeAlreadyAppendedEnchantments(NbtList enchantments){
         NbtList unstoredEnchants = enchantments.copy();
         NbtList toRemove = new NbtList();
-        for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
+        for(NbtElement stone:this.getEnchantmentStones()){
             toRemove.addAll(((NbtCompound) stone).getList("StoredEnchantments", 10));
         }
         unstoredEnchants.removeAll(toRemove);
@@ -139,7 +139,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
         if(this.getOrCreateNbt().contains("Enchantment Stones")){
             int fullStones = 0;
-            for(NbtElement stone:this.getOrCreateNbt().getList("Enchantment Stones",10)){
+            for(NbtElement stone:this.getEnchantmentStones()){
                 if (!((NbtCompound)stone).contains("StoredEnchantments", 9)) {
                     ((NbtCompound)stone).put("StoredEnchantments", new NbtList());
                 }
@@ -151,7 +151,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     fullStones++;
                 }
             }
-            if(!Boolean.parseBoolean(EnchantmentPreservationConfig.getVal("enchantableWithoutStone"))&&fullStones==this.getOrCreateNbt().getList("Enchantment Stones",10).size()){
+            if(!Boolean.parseBoolean(EnchantmentPreservationConfig.getVal("enchantableWithoutStone"))&&fullStones==this.getEnchantmentStones().size()){
                 info.cancel();
             }
         }
@@ -169,7 +169,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Inject(method = "setSubNbt",at=@At("HEAD"),cancellable = true)
     private void setStoredEnchantments(String key, NbtElement element,CallbackInfo info){
-        if(Objects.equals(key, "Enchantments")&&(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)||!this.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty())){
+        if(Objects.equals(key, "Enchantments")&&(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)||!this.getEnchantmentStones().isEmpty())){
             if(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
                 List<NbtElement> toRemove = new ArrayList<>();
                 for(int i = Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone")); i<((NbtList)element).size(); i++){
@@ -181,7 +181,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                 info.cancel();
             }else{
                 NbtList toApply = (NbtList) element.copy();
-                for(NbtElement stone:this.nbt.getList("Enchantment Stones",10)){
+                for(NbtElement stone:this.getEnchantmentStones()){
                     NbtList toRemove = new NbtList();
                     for(NbtElement enchantment:((NbtCompound)stone).getList("StoredEnchantments",10)){
                         if(toApply.contains(enchantment)){
@@ -194,7 +194,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                 }
 
                 int applied = 0;
-                for(NbtElement stone:this.nbt.getList("Enchantment Stones",10)){
+                for(NbtElement stone:this.getEnchantmentStones()){
                     while (((NbtCompound)stone).getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone"))&&applied<toApply.size()){
                         ((NbtCompound)stone).getList("StoredEnchantments",10).add(toApply.get(applied));
                         applied++;
@@ -214,7 +214,12 @@ public abstract class ItemStackMixin implements ItemStackAccess {
             this.nbt.put("Enchantment Stones", new NbtList());
         }
 
-        NbtList nbtList = this.nbt.getList("Enchantment Stones", 10);
+        NbtList nbtList = this.getEnchantmentStones();
         nbtList.add(Utils.createEnchantmentstoneNbt(stoneStack));
+    }
+
+    @Override
+    public NbtList getEnchantmentStones(){
+        return this.getOrCreateNbt().getList("Enchantment Stones",10);
     }
 }

@@ -3,7 +3,7 @@ package net.trueHorse.enchantmentPreservation;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 
-public class EnchantmentStonesRecipeSerializer {
+public class EnchantmentPreservationRecipeSerializer {
 
     public static RecipeSerializer<AddEnchantmentStoneRecipe> ADD_ENCHANTMENT_STONE;
 

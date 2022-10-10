@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.*;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
+import net.trueHorse.enchantmentPreservation.ItemStackAccess;
 import net.trueHorse.enchantmentPreservation.config.EnchantmentPreservationConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -33,7 +34,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
     @Redirect(method = "updateResult", at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;isDamageable()Z",ordinal = 1))
     private boolean isAnvilable(ItemStack itemStack){
         if(itemStack.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
-            return itemStack.getOrCreateNbt().getList("StoredEnchantments",10).size()<Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone"));
+            return itemStack.getEnchantments().size()<Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone"));
         }else{
             return itemStack.isDamageable();
         }
@@ -47,7 +48,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             info.cancel();
         }
 
-        if(!Boolean.parseBoolean(EnchantmentPreservationConfig.getVal("enchantableWithoutStone"))&&bl&&!itemStack.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)&&itemStack.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
+        if(!Boolean.parseBoolean(EnchantmentPreservationConfig.getVal("enchantableWithoutStone"))&&bl&&!itemStack.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)&&((ItemStackAccess)(Object)itemStack).getEnchantmentStones().isEmpty()){
             this.output.setStack(0, ItemStack.EMPTY);
             this.levelCost.set(0);
             info.cancel();
@@ -56,9 +57,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
     @Inject(method = "updateResult",at=@At(value = "INVOKE",target = "Lnet/minecraft/enchantment/EnchantmentHelper;set(Ljava/util/Map;Lnet/minecraft/item/ItemStack;)V",shift = At.Shift.BEFORE),locals = LocalCapture.CAPTURE_FAILEXCEPTION,cancellable = true)
     private void transferStones(CallbackInfo info, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3){
-        if(!itemStack3.getOrCreateNbt().getList("Enchantment Stones",10).isEmpty()){
-            NbtList stoneList1 = itemStack2.getOrCreateNbt().getList("Enchantment Stones",10).copy();
-            NbtList stoneList2 = itemStack3.getOrCreateNbt().getList("Enchantment Stones",10).copy();
+        if(!((ItemStackAccess)(Object)itemStack3).getEnchantmentStones().isEmpty()){
+            NbtList stoneList1 = ((ItemStackAccess)(Object)itemStack2).getEnchantmentStones().copy();
+            NbtList stoneList2 = ((ItemStackAccess)(Object)itemStack3).getEnchantmentStones().copy();
             if(stoneList1.size()+stoneList2.size()>Integer.parseInt(EnchantmentPreservationConfig.getVal("stonesPerEquip"))){
                 this.output.setStack(0, ItemStack.EMPTY);
                 this.levelCost.set(0);
