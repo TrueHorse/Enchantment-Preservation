@@ -28,7 +28,7 @@ public class EnchantmentPreservation implements ModInitializer {
 		EnchantmentPreservationConfig.loadConfigs();
 		EnchantmentPreservationItems.registerItems();
 		EnchantmentPreservationRecipeSerializer.registerSpecialRecipe();
-		if(true){
+		if(Boolean.parseBoolean(EnchantmentPreservationConfig.getVal("brotherEdition"))){
 			LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
 				if (source.isBuiltin() && new Identifier("minecraft", "chests/end_city_treasure") .equals(id)) {
 					LootPool.Builder poolBuilder = LootPool.builder()
