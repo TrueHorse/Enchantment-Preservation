@@ -11,15 +11,15 @@ import java.util.Properties;
 
 public class EnchantmentPreservationConfig {
 
-    private static final Map<String,ConfigOption<?>> configs = new HashMap<>();
+    private static final Map<String,ConfigOption> configs = new HashMap<>();
     private final static String MOD_CONFIG_DIR_NAME = FabricLoader.getInstance().getConfigDir() + "/enchantment_preservation";
     private final static File MOD_CONFIG_FILE = new File(MOD_CONFIG_DIR_NAME+"/enchantment_preservation.properties");
 
     public static void loadConfigs(){
-        configs.put("enchantableWithoutStone",new ConfigOption<Boolean>("true","true","Is equipment without a stone enchantable?"));
-        configs.put("enchantmentsPerStone",new ConfigOption<Integer>("3","3","How many enchantments a stone can hold."));
-        configs.put("stonesPerEquip", new ConfigOption<Integer>("1","1","How many enchantment stones you can add to one equipment."));
-        configs.put("brotherEdition", new ConfigOption<Boolean>("true","true","Should the addition my brother asked for, the \"Big Bui Stone\", be included and it's halves generated in end cities?"));
+        configs.put("enchantableWithoutStone",new ConfigOption("true","true","Is equipment without a stone enchantable?"));
+        configs.put("enchantmentsPerStone",new ConfigOption("3","3","How many enchantments a stone can hold."));
+        configs.put("stonesPerEquip", new ConfigOption("1","1","How many enchantment stones you can add to one equipment."));
+        configs.put("brotherEdition", new ConfigOption("true","true","Should the addition my brother asked for, the \"Big Bui Stone\", be included and it's halves generated in end cities?"));
 
 
         if(MOD_CONFIG_FILE.exists()){
@@ -65,7 +65,7 @@ public class EnchantmentPreservationConfig {
         }
     }
 
-    private static String getConfigContentAsString(Map<String, ConfigOption<?>> configs) {
+    private static String getConfigContentAsString(Map<String, ConfigOption> configs) {
         StringBuilder configString = new StringBuilder();
         configs.forEach((k,v)->{
             configString.append("#").append(v.getDescription()).append("\n");

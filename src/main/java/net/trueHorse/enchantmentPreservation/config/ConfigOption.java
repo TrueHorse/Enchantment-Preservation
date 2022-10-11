@@ -1,6 +1,6 @@
 package net.trueHorse.enchantmentPreservation.config;
 
-public class ConfigOption<T> {
+public class ConfigOption {
     private final String defaultVal;
     private String val;
     private final String description;
