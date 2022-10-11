@@ -8,11 +8,11 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.trueHorse.enchantmentPreservation.items.EnchantmentPreservationItems;
 
 import java.util.List;
+import java.util.Random;
 
 public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
 
@@ -28,11 +28,11 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
         for(int i=0;i<inventory.size();i++) {
             ItemStack stack = inventory.getStack(i);
             if (!stack.isEmpty()) {
-                if (stack.isOf(EnchantmentPreservationItems.BIGS_BLACK_HALF) && !blackHalf) {
+                if (stack.getItem() == EnchantmentPreservationItems.BIGS_BLACK_HALF && !blackHalf) {
                     blackHalf = true;
                     continue;
                 }
-                if (stack.isOf(EnchantmentPreservationItems.BIGS_RED_HALF) && !redHalf) {
+                if (stack.getItem()==EnchantmentPreservationItems.BIGS_RED_HALF && !redHalf) {
                     redHalf = true;
                     continue;
                 }
@@ -45,16 +45,8 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
     @Override
     public ItemStack craft(CraftingInventory inventory) {
         ItemStack stack = new ItemStack(EnchantmentPreservationItems.BIG_BUI_STONE);
-        List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
+        List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(new Random(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
         enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
-        /*
-        Map<Enchantment,Integer> enchantsToAdd = new HashMap<>();
-        enchantsToAdd.put(Enchantments.SHARPNESS,10);
-        enchantsToAdd.put(Enchantments.SWEEPING,5);
-        enchantsToAdd.put(Enchantments.FIRE_ASPECT,2);
-        EnchantmentHelper.set(enchantsToAdd,stack);
-
-         */
         return stack;
     }
 

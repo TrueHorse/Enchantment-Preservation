@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 import net.trueHorse.enchantmentPreservation.ItemAccess;
@@ -34,7 +35,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
             ItemStack stack = inventory.getStack(i);
             if(!stack.isEmpty()){
                 int maxStones = Integer.parseInt(EnchantmentPreservationConfig.getVal("stonesPerEquip"));
-                if(stack.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)&&stoneCount< maxStones){
+                if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(stack.getItem())&&stoneCount< maxStones){
                     stoneCount+=1;
                     continue;
                 }
@@ -64,13 +65,13 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
                 continue;
             }
 
-            if(!stack.isEmpty()&&stack.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
+            if(!stack.isEmpty()&&EnchantmentPreservation.ENCHANTMENT_STONES.contains(stack.getItem())){
                 stoneStacks.add(stack.copy());
             }
         }
 
         for(ItemStack stack:stoneStacks){
-            Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getOrCreateNbt().getList("StoredEnchantments",10));
+            Map<Enchantment,Integer> stoneEnchantments = EnchantmentHelper.fromNbt(stack.getOrCreateTag().getList("StoredEnchantments",10));
             List<Enchantment> notApplyEnchants = new ArrayList<>();
 
             ItemStack finalEquipmentStack = equipmentStack;
@@ -83,15 +84,17 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
                 });
 
                 if(equipEnchants.containsKey(e)&&equipEnchants.get(e)<=i){
-                    NbtCompound weakEnchantNbt = EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(e),equipEnchants.get(e));
+                    NbtCompound weakEnchantNbt = new NbtCompound();
+                    weakEnchantNbt.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(e)));
+                    weakEnchantNbt.putShort("lvl", (short)equipEnchants.get(e).byteValue());
 
                     finalEquipmentStack.getEnchantments().remove(weakEnchantNbt);
 
-                    if (!finalEquipmentStack.getOrCreateNbt().contains("weaker enchantments", 9)) {
-                        finalEquipmentStack.getOrCreateNbt().put("weaker enchantments", new NbtList());
+                    if (!finalEquipmentStack.getOrCreateTag().contains("weaker enchantments", 9)) {
+                        finalEquipmentStack.getOrCreateTag().put("weaker enchantments", new NbtList());
                     }
 
-                    NbtList nbtList = finalEquipmentStack.getOrCreateNbt().getList("weaker enchantments", 10);
+                    NbtList nbtList = finalEquipmentStack.getOrCreateTag().getList("weaker enchantments", 10);
                     nbtList.add(weakEnchantNbt);
                 }
 

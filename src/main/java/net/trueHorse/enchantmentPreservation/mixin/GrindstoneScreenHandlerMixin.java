@@ -30,7 +30,7 @@ public class GrindstoneScreenHandlerMixin {
         return stack.hasEnchantments();
     }
 
-    @Inject(method = "grind",at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;removeSubNbt(Ljava/lang/String;)V",ordinal = 1),locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "grind",at=@At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;removeSubTag(Ljava/lang/String;)V",ordinal = 1),locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void grindEnchantmentStones(ItemStack item, int damage, int amount, CallbackInfoReturnable<ItemStack> info, ItemStack itemStack){
         for(NbtElement stone:((ItemStackAccess)(Object)itemStack).getEnchantmentStones()){
             Map<Enchantment, Integer> map = (Map) EnchantmentHelper.fromNbt(((NbtCompound)stone).getList("StoredEnchantments",10)).entrySet().stream().filter((entry) -> {

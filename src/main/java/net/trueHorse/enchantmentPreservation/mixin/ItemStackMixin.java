@@ -10,8 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.tag.TagKey;
-import net.minecraft.text.*;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -39,13 +40,11 @@ import java.util.function.Consumer;
 public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Shadow
-    private NbtCompound nbt;
+    private NbtCompound tag;
     @Shadow
-    public abstract NbtCompound getOrCreateNbt();
+    public abstract NbtCompound getOrCreateTag();
 
     @Shadow public abstract Item getItem();
-
-    @Shadow public abstract boolean isIn(TagKey<Item> tag);
 
     @Shadow public abstract NbtList getEnchantments();
 
@@ -53,11 +52,11 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     private <T> void pickUpEnchantmentStonesOnBreak(int amount, LivingEntity entity, Consumer<T> breakCallback, CallbackInfo info) {
 
         if (entity instanceof PlayerEntity) {
-            NbtList stoneList = this.nbt.getList("Enchantment Stones",10);
+            NbtList stoneList = this.tag.getList("Enchantment Stones",10);
 
             for (NbtElement stoneNbt : stoneList) {
                 ItemStack stone = Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stoneNbt).getString("StoneId"))).getDefaultStack();
-                stone.getOrCreateNbt().put("StoredEnchantments",((NbtCompound)stoneNbt).getList("StoredEnchantments",10));
+                stone.getOrCreateTag().put("StoredEnchantments",((NbtCompound)stoneNbt).getList("StoredEnchantments",10));
 
                 ((PlayerEntity) entity).giveItemStack(stone);
             }
@@ -74,21 +73,21 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
                 NbtList storedEnchantmentNbt = ((NbtCompound)stone).getList("StoredEnchantments",10);
                 if(storedEnchantmentNbt.isEmpty()){
-                    list.add(MutableText.of(new LiteralTextContent("  None")).formatted(Formatting.GRAY));
+                    list.add(new LiteralText("  None").formatted(Formatting.GRAY));
                 }else {
                     for(NbtElement enchantmentNbt:storedEnchantmentNbt){
-                        Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
-                            Text enchantmentText = e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt));
-                            enchantmentText = Text.literal(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
-                            list.add(MutableText.of(new LiteralTextContent("  ")).append(enchantmentText));
+                        Registry.ENCHANTMENT.getOrEmpty(Identifier.tryParse(((NbtCompound)enchantmentNbt).getString("id"))).ifPresent((e) -> {
+                            Text enchantmentText = e.getName(((NbtCompound) enchantmentNbt).getShort("lvl"));
+                            enchantmentText = new LiteralText(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
+                            list.add(new LiteralText("  ").append(enchantmentText));
                         });
                     }
                 }
             }
-            Map<Enchantment,Integer> weakerEnchants = EnchantmentHelper.fromNbt(this.nbt.getList("weaker enchantments",10));
+            Map<Enchantment,Integer> weakerEnchants = EnchantmentHelper.fromNbt(this.tag.getList("weaker enchantments",10));
             weakerEnchants.forEach((e,i)->{
                 Text enchantmentName = e.getName(i);
-                list.add(Text.literal(enchantmentName.getString()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
+                list.add(new LiteralText(enchantmentName.getString()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
             });
         }
     }
@@ -106,16 +105,16 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Inject(method = "getEnchantments",at=@At("HEAD"),cancellable = true)
     private void getStoredEnchantments(CallbackInfoReturnable<NbtList> info){
-        if(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
-            info.setReturnValue(this.nbt != null ? this.nbt.getList("StoredEnchantments", 10) : new NbtList());
+        if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(this.getItem())){
+            info.setReturnValue(this.tag != null ? this.tag.getList("StoredEnchantments", 10) : new NbtList());
         }
     }
 
     @Inject(method = "hasEnchantments",at=@At("HEAD"),cancellable = true)
     private void hasStoredEnchantments(CallbackInfoReturnable<Boolean> info){
-        if(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
-            if (this.nbt != null && this.nbt.contains("StoredEnchantments", 9)) {
-                info.setReturnValue(!this.nbt.getList("StoredEnchantments", 10).isEmpty());
+        if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(this.getItem())){
+            if (this.tag != null && this.tag.contains("StoredEnchantments", 9)) {
+                info.setReturnValue(!this.tag.getList("StoredEnchantments", 10).isEmpty());
             } else {
                 info.setReturnValue(false);
             }
@@ -124,20 +123,23 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Inject(method = "addEnchantment",at=@At("HEAD"),cancellable = true)
     private void addToStoredEnchantment(Enchantment enchantment, int lvl, CallbackInfo info){
-        if(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
-            this.getOrCreateNbt();
-            if (!this.nbt.contains("StoredEnchantments", 9)) {
-                this.nbt.put("StoredEnchantments", new NbtList());
+        if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(this.getItem())){
+            this.getOrCreateTag();
+            if (!this.tag.contains("StoredEnchantments", 9)) {
+                this.tag.put("StoredEnchantments", new NbtList());
             }
 
-            NbtList nbtList = this.nbt.getList("StoredEnchantments", 10);
+            NbtList nbtList = this.tag.getList("StoredEnchantments", 10);
             if(nbtList.size() < Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone"))){
-                nbtList.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchantment)));
+                nbtCompound.putShort("lvl", (short)((byte)lvl));
+                nbtList.add(nbtCompound);
             }
             info.cancel();
         }
 
-        if(this.getOrCreateNbt().contains("Enchantment Stones")){
+        if(this.getOrCreateTag().contains("Enchantment Stones")){
             int fullStones = 0;
             for(NbtElement stone:this.getEnchantmentStones()){
                 if (!((NbtCompound)stone).contains("StoredEnchantments", 9)) {
@@ -145,7 +147,10 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                 }
                 NbtList storedEnchants = ((NbtCompound)stone).getList("StoredEnchantments",10);
                 if(storedEnchants.size()<Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone"))){
-                    storedEnchants.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)lvl));
+                    NbtCompound nbtCompound = new NbtCompound();
+                    nbtCompound.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchantment)));
+                    nbtCompound.putShort("lvl", (short)((byte)lvl));
+                    storedEnchants.add(nbtCompound);
                     break;
                 }else {
                     fullStones++;
@@ -158,26 +163,29 @@ public abstract class ItemStackMixin implements ItemStackAccess {
     }
 
     public void addEnchantmentFromStone(Enchantment enchantment, int level){
-        this.getOrCreateNbt();
-        if (!this.nbt.contains("Enchantments", 9)) {
-            this.nbt.put("Enchantments", new NbtList());
+        this.getOrCreateTag();
+        if (!this.tag.contains("Enchantments", 9)) {
+            this.tag.put("Enchantments", new NbtList());
         }
 
-        NbtList nbtList = this.nbt.getList("Enchantments", 10);
-        nbtList.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchantment), (byte)level));
+        NbtList nbtList = this.tag.getList("Enchantments", 10);
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchantment)));
+        nbtCompound.putShort("lvl", (short)((byte)level));
+        nbtList.add(nbtCompound);
     }
 
-    @Inject(method = "setSubNbt",at=@At("HEAD"),cancellable = true)
+    @Inject(method = "putSubTag",at=@At("HEAD"),cancellable = true)
     private void setStoredEnchantments(String key, NbtElement element,CallbackInfo info){
-        if(Objects.equals(key, "Enchantments")&&(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)||!this.getEnchantmentStones().isEmpty())){
-            if(this.isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
+        if(Objects.equals(key, "Enchantments")&&(EnchantmentPreservation.ENCHANTMENT_STONES.contains(this.getItem())||!this.getEnchantmentStones().isEmpty())){
+            if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(this.getItem())){
                 List<NbtElement> toRemove = new ArrayList<>();
                 for(int i = Integer.parseInt(EnchantmentPreservationConfig.getVal("enchantmentsPerStone")); i<((NbtList)element).size(); i++){
                     toRemove.add(((NbtList)element).get(i));
                 }
                 ((NbtList) element).removeAll(toRemove);
 
-                this.getOrCreateNbt().put("StoredEnchantments", element);
+                this.getOrCreateTag().put("StoredEnchantments", element);
                 info.cancel();
             }else{
                 NbtList toApply = (NbtList) element.copy();
@@ -209,9 +217,9 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Override
     public void addEnchantmentStone(ItemStack stoneStack){
-        this.getOrCreateNbt();
-        if (!this.nbt.contains("Enchantment Stones", 9)) {
-            this.nbt.put("Enchantment Stones", new NbtList());
+        this.getOrCreateTag();
+        if (!this.tag.contains("Enchantment Stones", 9)) {
+            this.tag.put("Enchantment Stones", new NbtList());
         }
 
         NbtList nbtList = this.getEnchantmentStones();
@@ -220,6 +228,6 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Override
     public NbtList getEnchantmentStones(){
-        return this.getOrCreateNbt().getList("Enchantment Stones",10);
+        return this.getOrCreateTag().getList("Enchantment Stones",10);
     }
 }

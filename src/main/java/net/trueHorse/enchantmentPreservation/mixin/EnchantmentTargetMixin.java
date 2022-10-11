@@ -14,7 +14,7 @@ public class EnchantmentTargetMixin {
 
     @Inject(method = "isAcceptableItem",at=@At(value = "HEAD"),cancellable = true)
     private void isEnchantmentStone(Item item, CallbackInfoReturnable<Boolean> info){
-        if(item.getDefaultStack().isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
+        if(EnchantmentPreservation.ENCHANTMENT_STONES.contains(item)){
             info.setReturnValue(true);
         }
     }
