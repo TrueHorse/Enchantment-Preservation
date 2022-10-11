@@ -1,6 +1,7 @@
 package net.trueHorse.enchantmentPreservation.items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
@@ -23,7 +24,12 @@ public class EnchantmentPreservationItems {
     public static final EnchantmentStoneItem GREEN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
     public static final EnchantmentStoneItem CYAN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
     public static final EnchantmentStoneItem BROWN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    
+    public static final EnchantmentStoneItem BIG_BUI_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(ItemGroup.MISC));
+    public static final EnchantmentStoneItem BIGS_RED_HALF = new EnchantmentStoneItem(new FabricItemSettings().group(ItemGroup.MISC));
+    public static final EnchantmentStoneItem BIGS_BLACK_HALF = new EnchantmentStoneItem(new FabricItemSettings().group(ItemGroup.MISC));
+
+
+
     public static void registerItems(){
         Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","white_enchantment_stone"),WHITE_ENCHANTMENT_STONE);
         Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","orange_enchantment_stone"),ORANGE_ENCHANTMENT_STONE);
@@ -41,5 +47,10 @@ public class EnchantmentPreservationItems {
         Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","gray_enchantment_stone"),GRAY_ENCHANTMENT_STONE);
         Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","light_gray_enchantment_stone"),LIGHT_GRAY_ENCHANTMENT_STONE);
         Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","brown_enchantment_stone"),BROWN_ENCHANTMENT_STONE);
+        if(true){
+            Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","big_bui_stone"),BIG_BUI_STONE);
+            Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","bigs_red_half"),BIGS_RED_HALF);
+            Registry.register(Registry.ITEM,new Identifier("enchantmentpreservation","bigs_black_half"),BIGS_BLACK_HALF);
+        }
     }
 }

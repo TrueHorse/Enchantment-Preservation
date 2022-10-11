@@ -1,4 +1,4 @@
-package net.trueHorse.enchantmentPreservation;
+package net.trueHorse.enchantmentPreservation.recipes;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -10,6 +10,9 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
+import net.trueHorse.enchantmentPreservation.ItemAccess;
+import net.trueHorse.enchantmentPreservation.ItemStackAccess;
 import net.trueHorse.enchantmentPreservation.config.EnchantmentPreservationConfig;
 
 import java.util.ArrayList;
