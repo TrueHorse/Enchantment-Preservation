@@ -3,14 +3,14 @@
   "id": "enchantmentpreservation",
   "version": "${version}",
 
-  "name": "Enchantment Stones",
+  "name": "Enchantment Preservation",
   "description": "Adds stones that can store your equipment’s enchantments.",
   "authors": [
     "TrueHorse"
   ],
   "contact": {
-    "sources": "https://github.com/TrueHorse/Enchantment-Stones",
-    "issues": "https://github.com/TrueHorse/Enchantment-Stones/issues"
+    "sources": "https://github.com/TrueHorse/Enchantment-Preservation",
+    "issues": "https://github.com/TrueHorse/Enchantment-Preservation/issues"
   },
 
   "license": "MIT",
