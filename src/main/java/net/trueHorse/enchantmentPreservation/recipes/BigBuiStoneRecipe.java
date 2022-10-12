@@ -25,7 +25,7 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
     public boolean matches(CraftingInventory inventory, World world) {
         boolean redHalf = false;
         boolean blackHalf = false;
-        boolean tool = false;
+        boolean equip = false;
 
         for(int i=0;i<inventory.size();i++) {
             ItemStack stack = inventory.getStack(i);
@@ -34,8 +34,8 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
                     blackHalf = true;
                     continue;
                 }
-                if (((ItemAccess)stack.getItem()).isEquipment(stack) && !tool) {
-                    tool = true;
+                if (((ItemAccess)stack.getItem()).isEquipment(stack) && !equip) {
+                    equip = true;
                     continue;
                 }
                 if (stack.isOf(EnchantmentPreservationItems.BIGS_RED_HALF) && !redHalf) {
@@ -50,19 +50,20 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingInventory inventory) {
-        ItemStack toolStack = ItemStack.EMPTY;
+        ItemStack equipStack = ItemStack.EMPTY;
         for(int i=0;i<inventory.size();i++){
             if(((ItemAccess)inventory.getStack(i).getItem()).isEquipment(inventory.getStack(i))){
-                toolStack = inventory.getStack(i);
+                equipStack = inventory.getStack(i);
+                break;
             }
         }
 
         ItemStack stack = new ItemStack(EnchantmentPreservationItems.BIG_BUI_STONE);
-        if(toolStack.equals(ItemStack.EMPTY)){
+        if(equipStack.equals(ItemStack.EMPTY)){
             List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
             enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
         }else{
-            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), toolStack,50,false);
+            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), equipStack,50,false);
             enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
         }
 
