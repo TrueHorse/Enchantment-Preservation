@@ -4,4 +4,4 @@ This is a Minecraft mod that adds stones you can put on your equipment and which
 
 ## Download
 
-
+This mod is available on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/enchantment-preservation) and [Modrinth](https://modrinth.com/mod/enchantment-preservation).
