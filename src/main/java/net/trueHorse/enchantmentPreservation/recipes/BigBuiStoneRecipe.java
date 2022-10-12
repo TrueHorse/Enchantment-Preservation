@@ -10,6 +10,7 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.trueHorse.enchantmentPreservation.ItemAccess;
 import net.trueHorse.enchantmentPreservation.items.EnchantmentPreservationItems;
 
 import java.util.List;
@@ -24,12 +25,17 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
     public boolean matches(CraftingInventory inventory, World world) {
         boolean redHalf = false;
         boolean blackHalf = false;
+        boolean tool = false;
 
         for(int i=0;i<inventory.size();i++) {
             ItemStack stack = inventory.getStack(i);
             if (!stack.isEmpty()) {
                 if (stack.isOf(EnchantmentPreservationItems.BIGS_BLACK_HALF) && !blackHalf) {
                     blackHalf = true;
+                    continue;
+                }
+                if (((ItemAccess)stack.getItem()).isEquipment(stack) && !tool) {
+                    tool = true;
                     continue;
                 }
                 if (stack.isOf(EnchantmentPreservationItems.BIGS_RED_HALF) && !redHalf) {
@@ -44,17 +50,22 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingInventory inventory) {
-        ItemStack stack = new ItemStack(EnchantmentPreservationItems.BIG_BUI_STONE);
-        List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
-        enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
-        /*
-        Map<Enchantment,Integer> enchantsToAdd = new HashMap<>();
-        enchantsToAdd.put(Enchantments.SHARPNESS,10);
-        enchantsToAdd.put(Enchantments.SWEEPING,5);
-        enchantsToAdd.put(Enchantments.FIRE_ASPECT,2);
-        EnchantmentHelper.set(enchantsToAdd,stack);
+        ItemStack toolStack = ItemStack.EMPTY;
+        for(int i=0;i<inventory.size();i++){
+            if(((ItemAccess)inventory.getStack(i).getItem()).isEquipment(inventory.getStack(i))){
+                toolStack = inventory.getStack(i);
+            }
+        }
 
-         */
+        ItemStack stack = new ItemStack(EnchantmentPreservationItems.BIG_BUI_STONE);
+        if(toolStack.equals(ItemStack.EMPTY)){
+            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
+            enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
+        }else{
+            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), toolStack,50,false);
+            enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
+        }
+
         return stack;
     }
 
