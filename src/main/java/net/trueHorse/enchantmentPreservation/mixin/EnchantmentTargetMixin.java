@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Pseudo
 public class EnchantmentTargetMixin {
 
-    @Inject(method = "isAcceptableItem",at=@At(value = "HEAD"),cancellable = true)
+    @Inject(method = "isAcceptableItem(Lnet/minecraft/item/Item;)Z",at=@At(value = "HEAD"),cancellable = true)
     private void isEnchantmentStone(Item item, CallbackInfoReturnable<Boolean> info){
         if(item.getDefaultStack().isIn(EnchantmentPreservation.ENCHANTMENT_STONES)){
             info.setReturnValue(true);
