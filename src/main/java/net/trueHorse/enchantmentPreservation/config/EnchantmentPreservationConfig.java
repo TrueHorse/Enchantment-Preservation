@@ -25,7 +25,9 @@ public class EnchantmentPreservationConfig {
         if(MOD_CONFIG_FILE.exists()){
             try {
                 Properties tmpProperties = new Properties();
-                tmpProperties.load(new FileReader(MOD_CONFIG_FILE));
+                FileReader reader = new FileReader(MOD_CONFIG_FILE);
+                tmpProperties.load(reader);
+                reader.close();
                 tmpProperties.forEach((k,v)->configs.get(k).setVal((String) v));
                 createOrUpdateConfigFile();
             } catch (FileNotFoundException e) {
