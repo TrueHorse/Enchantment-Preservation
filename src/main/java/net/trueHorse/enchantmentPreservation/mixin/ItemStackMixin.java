@@ -11,7 +11,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.tag.TagKey;
-import net.minecraft.text.*;
+import net.minecraft.text.Text;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -74,13 +76,13 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
                 NbtList storedEnchantmentNbt = ((NbtCompound)stone).getList("StoredEnchantments",10);
                 if(storedEnchantmentNbt.isEmpty()){
-                    list.add(MutableText.of(new LiteralTextContent("  None")).formatted(Formatting.GRAY));
+                    list.add(new LiteralText("  None").formatted(Formatting.GRAY));
                 }else {
                     for(NbtElement enchantmentNbt:storedEnchantmentNbt){
                         Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
                             Text enchantmentText = e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt));
-                            enchantmentText = Text.literal(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
-                            list.add(MutableText.of(new LiteralTextContent("  ")).append(enchantmentText));
+                            enchantmentText = new LiteralText(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
+                            list.add(new LiteralText("  ").append(enchantmentText));
                         });
                     }
                 }
@@ -88,7 +90,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
             Map<Enchantment,Integer> weakerEnchants = EnchantmentHelper.fromNbt(this.nbt.getList("weaker enchantments",10));
             weakerEnchants.forEach((e,i)->{
                 Text enchantmentName = e.getName(i);
-                list.add(Text.literal(enchantmentName.getString()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
+                list.add(new LiteralText(enchantmentName.getString()).setStyle(enchantmentName.getStyle().withColor(Formatting.DARK_GRAY)));
             });
         }
     }

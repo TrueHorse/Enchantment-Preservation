@@ -8,12 +8,12 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.trueHorse.enchantmentPreservation.ItemAccess;
 import net.trueHorse.enchantmentPreservation.items.EnchantmentPreservationItems;
 
 import java.util.List;
+import java.util.Random;
 
 public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
 
@@ -60,10 +60,10 @@ public class BigBuiStoneRecipe extends SpecialCraftingRecipe {
 
         ItemStack stack = new ItemStack(EnchantmentPreservationItems.BIG_BUI_STONE);
         if(equipStack.equals(ItemStack.EMPTY)){
-            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
+            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(new Random(), Items.DIAMOND_SWORD.getDefaultStack(),50,false);
             enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
         }else{
-            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(Random.create(), equipStack,50,false);
+            List<EnchantmentLevelEntry> enchants = EnchantmentHelper.generateEnchantments(new Random(), equipStack,50,false);
             enchants.forEach(e -> stack.addEnchantment(e.enchantment,e.level+2));
         }
 
