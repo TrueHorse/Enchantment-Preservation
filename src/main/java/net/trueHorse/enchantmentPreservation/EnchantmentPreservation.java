@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 public class EnchantmentPreservation implements ModInitializer {
 
 	public static final Logger LOGGER = LogManager.getLogger("enchantmentpreservation");
-	public static final ItemGroup ENCHANTMENT_STONES_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentpreservation","main_group")).icon(()->new ItemStack(EnchantmentPreservationItems.BLUE_ENCHANTMENT_STONE)).build();
+	public static final ItemGroup ENCHANTMENT_PRESERVATION_GROUP = FabricItemGroupBuilder.create(new Identifier("enchantmentpreservation","main_group")).icon(()->new ItemStack(EnchantmentPreservationItems.BLUE_ENCHANTMENT_STONE)).build();
 	public static final Tag<Item> ENCHANTMENT_STONES = TagRegistry.item(new Identifier("enchantmentpreservation","enchantment_stones"));
 
 	@Override

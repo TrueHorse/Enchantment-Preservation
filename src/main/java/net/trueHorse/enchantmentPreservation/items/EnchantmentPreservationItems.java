@@ -7,22 +7,22 @@ import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 
 public class EnchantmentPreservationItems {
 
-    public static final EnchantmentStoneItem WHITE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem BLACK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem LIGHT_GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem YELLOW_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem ORANGE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem RED_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem PURPLE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem MAGENTA_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem PINK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem LIGHT_BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem LIME_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem GREEN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem CYAN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
-    public static final EnchantmentStoneItem BROWN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_STONES_GROUP));
+    public static final EnchantmentStoneItem WHITE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem BLACK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem LIGHT_GRAY_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem YELLOW_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem ORANGE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem RED_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem PURPLE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem MAGENTA_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem PINK_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem LIGHT_BLUE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem LIME_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem GREEN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem CYAN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
+    public static final EnchantmentStoneItem BROWN_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings().group(EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP));
 
 
     public static void registerItems(){
