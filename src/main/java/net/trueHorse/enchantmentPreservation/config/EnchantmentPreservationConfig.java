@@ -19,8 +19,6 @@ public class EnchantmentPreservationConfig {
         configs.put("enchantableWithoutStone",new ConfigOption("true","true","Is equipment without a stone enchantable?"));
         configs.put("enchantmentsPerStone",new ConfigOption("3","3","How many enchantments a stone can hold."));
         configs.put("stonesPerEquip", new ConfigOption("1","1","How many enchantment stones you can add to one equipment."));
-        configs.put("brotherEdition", new ConfigOption("true","true","Should the addition my brother asked for, the \"Big Bui Stone\", be included and it's halves generated in end cities?"));
-
 
         if(MOD_CONFIG_FILE.exists()){
             try {
