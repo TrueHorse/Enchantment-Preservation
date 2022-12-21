@@ -1,0 +1,19 @@
+{
+  "item.enchantmentpreservation.brown_enchantment_stone": "棕色附魔石",
+  "item.enchantmentpreservation.white_enchantment_stone": "白色附魔石",
+  "item.enchantmentpreservation.black_enchantment_stone": "黑色附魔石",
+  "item.enchantmentpreservation.gray_enchantment_stone": "灰色附魔石",
+  "item.enchantmentpreservation.light_gray_enchantment_stone": "淡灰色附魔石",
+  "item.enchantmentpreservation.yellow_enchantment_stone": "黄色附魔石",
+  "item.enchantmentpreservation.orange_enchantment_stone": "橙色附魔石",
+  "item.enchantmentpreservation.red_enchantment_stone": "红色附魔石",
+  "item.enchantmentpreservation.purple_enchantment_stone": "紫色附魔石",
+  "item.enchantmentpreservation.magenta_enchantment_stone": "品红色附魔石",
+  "item.enchantmentpreservation.pink_enchantment_stone": "粉色附魔石",
+  "item.enchantmentpreservation.green_enchantment_stone": "绿色附魔石",
+  "item.enchantmentpreservation.lime_enchantment_stone": "黄绿色附魔石",
+  "item.enchantmentpreservation.cyan_enchantment_stone": "青色附魔石",
+  "item.enchantmentpreservation.blue_enchantment_stone": "蓝色附魔石",
+  "item.enchantmentpreservation.light_blue_enchantment_stone": "淡蓝色附魔石",
+  "itemGroup.enchantmentpreservation.main_group": "附魔保存"
+}
