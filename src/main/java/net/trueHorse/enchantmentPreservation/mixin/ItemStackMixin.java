@@ -10,11 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 import net.trueHorse.enchantmentPreservation.ItemStackAccess;
 import net.trueHorse.enchantmentPreservation.Utils;
@@ -56,7 +57,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
             NbtList stoneList = this.nbt.getList("Enchantment Stones",10);
 
             for (NbtElement stoneNbt : stoneList) {
-                ItemStack stone = Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stoneNbt).getString("StoneId"))).getDefaultStack();
+                ItemStack stone = Registries.ITEM.get(Identifier.tryParse(((NbtCompound)stoneNbt).getString("StoneId"))).getDefaultStack();
                 stone.getOrCreateNbt().put("StoredEnchantments",((NbtCompound)stoneNbt).getList("StoredEnchantments",10));
 
                 ((PlayerEntity) entity).giveItemStack(stone);
@@ -69,7 +70,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
         NbtList stonesAsNbt = this.getEnchantmentStones();
         if(!stonesAsNbt.isEmpty()){
             for(NbtElement stone:stonesAsNbt){
-                MutableText stoneName = (MutableText) Registry.ITEM.get(Identifier.tryParse(((NbtCompound)stone).getString("StoneId"))).getName();
+                MutableText stoneName = (MutableText) Registries.ITEM.get(Identifier.tryParse(((NbtCompound)stone).getString("StoneId"))).getName();
                 list.add(stoneName.append(":").formatted(Formatting.GRAY));
 
                 NbtList storedEnchantmentNbt = ((NbtCompound)stone).getList("StoredEnchantments",10);
@@ -77,7 +78,7 @@ public abstract class ItemStackMixin implements ItemStackAccess {
                     list.add(MutableText.of(new LiteralTextContent("  None")).formatted(Formatting.GRAY));
                 }else {
                     for(NbtElement enchantmentNbt:storedEnchantmentNbt){
-                        Registry.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
+                        Registries.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantmentNbt)).ifPresent((e) -> {
                             Text enchantmentText = e.getName(EnchantmentHelper.getLevelFromNbt((NbtCompound) enchantmentNbt));
                             enchantmentText = Text.literal(enchantmentText.getString()).setStyle(this.getEnchantments().contains(enchantmentNbt)?enchantmentText.getStyle(): enchantmentText.getStyle().withColor(Formatting.DARK_GRAY));
                             list.add(MutableText.of(new LiteralTextContent("  ")).append(enchantmentText));

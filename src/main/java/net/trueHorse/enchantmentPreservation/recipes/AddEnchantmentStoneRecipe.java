@@ -8,6 +8,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
@@ -21,8 +22,8 @@ import java.util.Map;
 
 public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
 
-    public AddEnchantmentStoneRecipe(Identifier id) {
-        super(id);
+    public AddEnchantmentStoneRecipe(Identifier id, CraftingRecipeCategory category) {
+        super(id,category);
     }
 
     @Override
