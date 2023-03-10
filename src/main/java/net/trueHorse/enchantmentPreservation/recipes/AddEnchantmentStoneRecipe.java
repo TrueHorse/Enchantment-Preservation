@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
@@ -53,7 +54,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory) {
+    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager dynamicRegistryManager) {
         ItemStack equipmentStack = ItemStack.EMPTY;
         ArrayList<ItemStack> stoneStacks = new ArrayList<>();
 

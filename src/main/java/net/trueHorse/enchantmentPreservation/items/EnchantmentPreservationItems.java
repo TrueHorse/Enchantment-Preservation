@@ -10,8 +10,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 
-import java.lang.reflect.Field;
-
 public class EnchantmentPreservationItems {
 
     public static final EnchantmentStoneItem WHITE_ENCHANTMENT_STONE = new EnchantmentStoneItem(new FabricItemSettings());
