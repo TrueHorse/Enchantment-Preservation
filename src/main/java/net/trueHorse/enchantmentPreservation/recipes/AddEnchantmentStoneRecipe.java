@@ -2,7 +2,7 @@ package net.trueHorse.enchantmentPreservation.recipes;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -28,7 +28,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(RecipeInputInventory inventory, World world) {
         boolean hasEquipment = false;
         int stoneCount = 0;
 
@@ -54,7 +54,7 @@ public class AddEnchantmentStoneRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager dynamicRegistryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager dynamicRegistryManager) {
         ItemStack equipmentStack = ItemStack.EMPTY;
         ArrayList<ItemStack> stoneStacks = new ArrayList<>();
 

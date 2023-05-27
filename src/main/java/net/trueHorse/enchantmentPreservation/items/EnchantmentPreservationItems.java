@@ -7,8 +7,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import net.trueHorse.enchantmentPreservation.EnchantmentPreservation;
 
 public class EnchantmentPreservationItems {
 
@@ -69,11 +69,11 @@ public class EnchantmentPreservationItems {
     }
 
     private static void groupStone(Item stone){
-        groupItem(stone, EnchantmentPreservation.ENCHANTMENT_PRESERVATION_GROUP);
+        groupItem(stone, EnchantmentPreservationItemGroups.ENCHANTMENT_PRESERVATION_GROUP_KEY);
         groupItem(stone, ItemGroups.INGREDIENTS);
     }
 
-    private static void groupItem(Item item, ItemGroup group){
+    private static void groupItem(Item item, RegistryKey<ItemGroup> group){
         ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
     }
 }
