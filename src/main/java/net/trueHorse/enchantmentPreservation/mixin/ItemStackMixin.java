@@ -222,6 +222,6 @@ public abstract class ItemStackMixin implements ItemStackAccess {
 
     @Override
     public NbtList getEnchantmentStones(){
-        return this.getOrCreateNbt().getList("Enchantment Stones",10);
+        return this.nbt != null ? nbt.getList("Enchantment Stones",10):new NbtList();
     }
 }
